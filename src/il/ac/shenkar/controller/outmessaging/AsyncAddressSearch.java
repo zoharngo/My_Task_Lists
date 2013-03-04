@@ -42,13 +42,15 @@ public class AsyncAddressSearch extends AsyncTask<String, Void, Void> {
 				Address address = addresses.get(i);
 
 				String line = String.format(
-						"%s,%s,%s",
+						Locale.ENGLISH,
+						"%s,%s,%s:%f,%f",
 						address.getCountryName() != null ? address
 								.getCountryName() : "",
 						address.getLocality() != null ? address.getLocality()
 								: "",
 						address.getAddressLine(0) != null ? address
-								.getAddressLine(0) : "no result!.");
+								.getAddressLine(0) : "no result!.", address
+								.getLatitude(), address.getLongitude());
 				addressTextArr.add(line);
 
 			}

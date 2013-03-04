@@ -3,7 +3,7 @@ package il.ac.shenkar.controller.notifications;
 import il.ac.shenkar.controller.AddNewTaskActivity;
 import il.ac.shenkar.controller.MainTaskListActivity;
 import il.ac.shenkar.controller.R;
-import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.Notification.Builder;
 import android.app.NotificationManager;
@@ -13,10 +13,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 
 public class NotificationReceiver extends BroadcastReceiver {
 
-	@SuppressLint("NewApi")
+	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	@Override
 	public void onReceive(Context context, Intent intent) {
 

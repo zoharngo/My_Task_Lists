@@ -25,8 +25,8 @@ public class AddressDialogFragment extends DialogFragment {
 				.findViewById(R.id.list_address);
 		Bundle bundle = getArguments();
 		ArrayList<String> addresss = bundle
-				.getStringArrayList(AddNewTaskActivity.FIND_ADDRESSS);
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+				.getStringArrayList(AddNewTaskActivity.FIND_ADDRESSS);	
+ 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
 				android.R.layout.simple_list_item_1, addresss);
 		listAddress.setAdapter(adapter);
 		listAddress.setOnItemClickListener((OnItemClickListener) getActivity());

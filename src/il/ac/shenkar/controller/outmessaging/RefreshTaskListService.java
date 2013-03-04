@@ -35,15 +35,15 @@ public class RefreshTaskListService extends IntentService {
 					"IOException occur while trying to sync new task to server");
 			bus.post(new RefreshExceptionEvent("IOException"));
 		} catch (JSONException e) {
-			Log.i(TAG,
+			Log.e(TAG,
 					"JSONException occur while trying to sync new task to server");
 			bus.post(new RefreshExceptionEvent("JSONException"));
 		} catch (SQLException e) {
-			Log.i(TAG,
+			Log.e(TAG,
 					"SQLException occur while trying to sync new task to server");
 			bus.post(new RefreshExceptionEvent("SQLException"));
 		} catch (GeneralSecurityException e) {
-			Log.i(TAG,
+			Log.e(TAG,
 					"GeneralSecurityException occur while trying to sync new task to server");
 			bus.post(new RefreshExceptionEvent("GeneralSecurityException"));
 		}

@@ -6,6 +6,7 @@ import il.ac.shenkar.controller.outmessaging.AsyncAddressSearch;
 import il.ac.shenkar.controller.outmessaging.events.AsyncFindAddressSucceedEvent;
 import il.ac.shenkar.model.Task;
 import il.ac.shenkar.model.TasksListModel;
+import java.util.ArrayList;
 import java.util.Calendar;
 import com.squareup.otto.Subscribe;
 import android.app.AlarmManager;
@@ -13,6 +14,7 @@ import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
@@ -29,7 +31,6 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -40,6 +41,8 @@ public class AddNewTaskActivity extends FragmentActivity implements
 		OnCheckedChangeListener, OnItemClickListener {
 	public final static String TASK_EXTRA = "il.ac.shenkar.controller.TASK";
 	public final static String FIND_ADDRESSS = "il.ac.shenkar.controller.FIND_ADDRESSS";
+	private static final long POINT_RADIUS = 500;
+	private static final long PROX_ALERT_EXPIRATION = -1;
 	private final static String TAG = "controller_AddNewTaskActivity";
 	private DialogFragment findAddressDialog = null;
 	private TasksListModel tasksListModel = null;
@@ -56,7 +59,10 @@ public class AddNewTaskActivity extends FragmentActivity implements
 	private int datePickerDayOfMounth = 0;
 	private int datePickerMounth = 0;
 	private int datePickerYear = 0;
-
+	private double latitude = 0;
+	private double longitude = 0;
+	private ArrayList<String> addressStrArr = null;
+	private LocationManager locationManager = null;
 	private BusProvider bus = BusProvider.getBusProvider();
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -133,7 +139,6 @@ public class AddNewTaskActivity extends FragmentActivity implements
 						getApplicationContext(),
 						Integer.valueOf((int) wakeUptimeInterval), intent,
 						PendingIntent.FLAG_UPDATE_CURRENT);
-
 				AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
 				alarmManager.set(AlarmManager.RTC_WAKEUP,
@@ -141,6 +146,20 @@ public class AddNewTaskActivity extends FragmentActivity implements
 						pendingIntent);
 
 			}
+		}
+		if (toggleLocationAlarm.isChecked()) {
+			Intent intent = new Intent(AddNewTaskActivity.this,
+					NotificationReceiver.class);
+			intent.putExtra(TASK_EXTRA, editDescription.getText().toString());
+
+			PendingIntent pendingIntent = PendingIntent.getBroadcast(
+					getApplicationContext(),
+					Integer.valueOf((int) task.getDate()), intent,
+					PendingIntent.FLAG_UPDATE_CURRENT);
+
+			locationManager.addProximityAlert(latitude, longitude,
+					POINT_RADIUS, PROX_ALERT_EXPIRATION, pendingIntent);
+
 		}
 		tasksListModel.asyncTaskToServer(task);
 		finish();
@@ -181,9 +200,17 @@ public class AddNewTaskActivity extends FragmentActivity implements
 	public void onAsyncFindAddressSucceedEvent(AsyncFindAddressSucceedEvent e) {
 
 		findAddressDialog = new AddressDialogFragment();
+
 		Bundle bundle = new Bundle();
 		if (!(e.address.isEmpty())) {
-			bundle.putStringArrayList(FIND_ADDRESSS, e.address);
+			addressStrArr = e.address;
+			ArrayList<String> formatedAddress = new ArrayList<String>();
+			for (String addressStr : e.address) {
+				int dilimeterIndex = addressStr.indexOf(":");
+				formatedAddress.add(addressStr.substring(0, dilimeterIndex));
+			}
+
+			bundle.putStringArrayList(FIND_ADDRESSS, formatedAddress);
 			findAddressDialog.setArguments(bundle);
 			findAddressDialog.show(getSupportFragmentManager(), "find address");
 		} else {
@@ -243,8 +270,11 @@ public class AddNewTaskActivity extends FragmentActivity implements
 			break;
 		case R.id.button_set_location_alarm:
 			if (isChecked) {
-				alarmLocationTextView
-						.setText(getString(R.string.alarm_time_set) + " On.");
+				locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+					alarmLocationTextView
+							.setText(getString(R.string.alarm_time_set)
+									+ " On.");
+				
 			} else {
 				alarmLocationTextView
 						.setText(getString(R.string.alarm_time_set) + " Off.");
@@ -258,6 +288,12 @@ public class AddNewTaskActivity extends FragmentActivity implements
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		String citiy = (String) arg0.getItemAtPosition(arg2);
+		int dilimeter = addressStrArr.get(arg2).indexOf(":");
+		String coords[] = addressStrArr.get(arg2)
+				.substring(dilimeter + 1, addressStrArr.get(arg2).length())
+				.split(",");
+		latitude = Double.parseDouble(coords[0]);
+		longitude = Double.parseDouble(coords[1]);
 		editlocation.setText(citiy);
 		findAddressDialog.dismiss();
 	}
