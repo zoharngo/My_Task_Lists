@@ -1,0 +1,65 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="il.ac.shenkar.controller"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="17" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:name=".application.ApplicationRoot"
+        android:debuggable="true"
+        android:icon="@drawable/ic_launcher"
+        android:theme="@android:style/Theme.DeviceDefault"
+        android:uiOptions="splitActionBarWhenNarrow" >
+        <activity
+            android:name=".MainTaskListActivity"
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
+        <activity
+            android:name=".AddNewTaskActivity"
+            android:label="@string/title_activity_add_new_task"
+            android:windowSoftInputMode="stateHidden" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="il.ac.shenkar.controller.MainTaskListActivity" />
+        </activity>
+        <activity
+            android:name=".WelocomeActivity"
+            android:label="@string/title_activity_welcome" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="il.ac.shenkar.controller.WelocomeActivity" />
+        </activity>
+        <activity
+            android:name=".SignUpActivity"
+            android:label="@string/title_activity_sign_up" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="il.ac.shenkar.controller.WelocomeActivity" />
+        </activity>
+
+        <receiver android:name="il.ac.shenkar.controller.notifications.NotificationReceiver" >
+            <intent-filter>
+                <action android:name="il.ac.shenkar.controller.Notifier" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="il.ac.shenkar.controller.outmessaging.RefreshTaskListService"
+            android:enabled="true" />
+    </application>
+
+</manifest>

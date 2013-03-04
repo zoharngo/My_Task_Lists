@@ -1,0 +1,55 @@
+<resources>
+
+    <string name="welcome">Hello,\nWelcome to What TODO Today App.\n\nThis is your first Entery to 
+the Application.\n\nIn order for you to Post Task you
+need vaild account detailes.\n\nPress Continue In order to log\nin 
+to exist Accounts Or Sign up\nto create new Account.</string>
+    <string name="hello">Hello</string>
+    <string name="first_task">you register here for one reason to start remember your bloody tasks!..\n\nso your first task is to remember this!.</string>
+    <string name="todo_when">TODO on:</string>
+    <string name="location_where">Location:</string>
+    <string name="title_activity_welcome">What TODO Today</string>
+    <string name="title_activity_sign_up">Sign Up</string>
+    <string name="title_activity_login">Log In</string>
+    <string name="menu_settings">Settings</string>
+    <string name="add_task_btn">Add</string>
+    <string name="delete_task_btn">Delete</string>
+    <string name="delete_all_task_btn">Delete All</string>
+    <string name="sort_task_btn">Sort</string>
+    <string name="sort_by_urgency">By Urgency</string>
+    <string name="sort_by_time_stamp">By Time Stamp</string>
+    <string name="edit_description">Description:</string>
+    <string name="geo_location">Location:</string>
+    <string name="task"></string>
+    <string name="time_stamp"></string>
+    <string name="check_done">Done</string>
+    <string name="button_create">Save</string>
+    <string name="date_of_task">Date set:</string>
+    <string name="findBtn">find</string>
+    <string name="time_of_task">Time set:</string>
+    <string name="setBtn">Set</string>
+    <string name="title_activity_add_new_task">Add New Task</string>
+    <string name="alarm_time_set">Set time alarm:</string>
+    <string name="alarm_location_set">Set location alarm:</string>
+    <string name="save_btn">Save</string>
+    <string name="continueBtn">Continue</string>
+    <string name="signUpBtn">Sign Up</string>
+    <string name="sign_up_title">Please enter the following details :</string>
+    <string name="firstName">First Name</string>
+    <string name="lastName">Last Name</string>
+    <string name="userId">User Name</string>
+    <string name="email">Email Address</string>
+    <string name="pass">Password</string>
+    <string name="createAccountBtn">Create Account</string>
+    <string name="login_title">Please enter your user name and password :</string>
+    <string name="logInBtn">Log In</string>
+    <string name="logOutBtn">Log Out</string>
+    <string name="search_bar_text">Search Task</string>
+    <string name="dialog_positive_btn">OK</string>
+    <string name="address_title">Select Adderss:</string>
+    
+    <string name="sometime">Somewhere</string>
+    <string name="somewhere">Sometime</string>
+    
+
+</resources>
