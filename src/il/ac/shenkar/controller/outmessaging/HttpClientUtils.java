@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
 import java.sql.SQLException;
 import java.util.zip.GZIPInputStream;
-
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -18,10 +17,10 @@ import org.apache.http.message.BasicHeader;
 import org.apache.http.protocol.HTTP;
 import org.json.JSONObject;
 
-import android.util.Log;
+
 
 public class HttpClientUtils {
-	private static final String TAG = "il.ac.shenkar.controller.outmessaging.HttpClientUtils";
+	
 
 	private static String convertStreamToString(InputStream in)
 			throws IOException, SQLException, GeneralSecurityException {
@@ -62,13 +61,8 @@ public class HttpClientUtils {
 
 			httpPost.setEntity(se);
 
-			long t = System.currentTimeMillis();
-
 			HttpResponse response = httpClient.execute(httpPost);
 
-			Log.i(TAG,
-					"HTTPResponse received in ["
-							+ (System.currentTimeMillis() - t) + "ms]");
 			// Get hold of the response entity (-> the data):
 			HttpEntity entity = response.getEntity();
 

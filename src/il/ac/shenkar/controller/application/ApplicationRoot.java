@@ -6,21 +6,18 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.support.v4.app.FragmentManager;
 
 public class ApplicationRoot extends Application {
 	public static final String EXTRA_TITLE_ERROR_DIALOG = "il.ac.shenkar.controller.application.ApplicationRoot.EXTRA_TITLE_ERROR_DIALOG";
 	public static final String EXTRA_MESSAGE_ERROR_DIALOG = "il.ac.shenkar.controller.application.ApplicationRoot.EXTRA_MESSAGE_ERROR_DIALOG";
-	private final static String TAG = "il.ac.shenkar.controller.application.ApplicationRoot";
 	public static final String filename = "UserDetails";
 	public static User user = null;
 	private static SharedPreferences sp;
 
 	@Override
 	public void onCreate() {
-		super.onCreate();
-		Log.i(TAG, "ApplicationRoot started");
+		super.onCreate();	
 		sp = getSharedPreferences(ApplicationRoot.filename, 0);
 		if (!(isFirstRun())) {
 			loadUser();

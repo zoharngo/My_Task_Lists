@@ -3,20 +3,18 @@ package il.ac.shenkar.controller.outmessaging;
 import il.ac.shenkar.controller.bus.BusProvider;
 import il.ac.shenkar.controller.outmessaging.events.AsyncFindAddressFaildEvent;
 import il.ac.shenkar.controller.outmessaging.events.AsyncFindAddressSucceedEvent;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
-import android.util.Log;
+
 
 public class AsyncAddressSearch extends AsyncTask<String, Void, Void> {
-	public static final String TAG = "il.ac.shenkar.controller.outmessaging.AsyncAddressSearch";
+
 	Context context;
 	BusProvider bus = BusProvider.getBusProvider();
 
@@ -31,8 +29,7 @@ public class AsyncAddressSearch extends AsyncTask<String, Void, Void> {
 		List<Address> addresses = null;
 		try {
 			addresses = geocoder.getFromLocationName(params[0], 5);
-		} catch (IOException e) {
-			Log.e(TAG, "IOException while searching address");
+		} catch (IOException e) {		
 			bus.post(new AsyncFindAddressFaildEvent(e.toString()));
 			e.printStackTrace();
 		}

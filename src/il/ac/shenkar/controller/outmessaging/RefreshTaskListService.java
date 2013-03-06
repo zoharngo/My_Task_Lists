@@ -12,17 +12,15 @@ import il.ac.shenkar.model.Task;
 import il.ac.shenkar.model.TasksListModel;
 import android.app.IntentService;
 import android.content.Intent;
-import android.util.Log;
+
 
 public class RefreshTaskListService extends IntentService {
-	private static final String TAG = "il.ac.shenkar.controller.outmessaging.RefreshTaskListService";
 	private BusProvider bus = BusProvider.getBusProvider();
 	private TasksListModel tasksListModel = TasksListModel
 			.getInstance(getBaseContext());
 
 	public RefreshTaskListService() {
-		super("RefreshTaskListService");
-		Log.i(TAG, "RefreshTaskListService created");
+		super("RefreshTaskListService");	
 	}
 
 	@Override
@@ -30,21 +28,13 @@ public class RefreshTaskListService extends IntentService {
 		try {
 			ArrayList<Task> refreshedTask = tasksListModel.refreshTasksList();
 			bus.post(new RefreshTasksListEvent(refreshedTask));
-		} catch (IOException e) {
-			Log.i(TAG,
-					"IOException occur while trying to sync new task to server");
+		} catch (IOException e) {		
 			bus.post(new RefreshExceptionEvent("IOException"));
-		} catch (JSONException e) {
-			Log.e(TAG,
-					"JSONException occur while trying to sync new task to server");
+		} catch (JSONException e) {	
 			bus.post(new RefreshExceptionEvent("JSONException"));
-		} catch (SQLException e) {
-			Log.e(TAG,
-					"SQLException occur while trying to sync new task to server");
+		} catch (SQLException e) {	
 			bus.post(new RefreshExceptionEvent("SQLException"));
 		} catch (GeneralSecurityException e) {
-			Log.e(TAG,
-					"GeneralSecurityException occur while trying to sync new task to server");
 			bus.post(new RefreshExceptionEvent("GeneralSecurityException"));
 		}
 

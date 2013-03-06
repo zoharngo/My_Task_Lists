@@ -1,17 +1,13 @@
 package il.ac.shenkar.model;
-
 import il.ac.shenkar.controller.outmessaging.AsyncDeleteTaskFromServer;
 import il.ac.shenkar.controller.outmessaging.AsyncGetUserInfo;
 import il.ac.shenkar.controller.outmessaging.AsyncTaskToServer;
 import il.ac.shenkar.controller.outmessaging.AsyncUserToServer;
 import il.ac.shenkar.controller.outmessaging.HttpClient;
-
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
-
 import org.json.JSONException;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -20,10 +16,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
-import android.util.Log;
+
 
 public class TasksListModel {
-	public static final String TAG = "il.ac.shenkar.model.TasksListModel";
 
 	private static TasksListModel taskListModel = null;
 	private ArrayList<Task> tasksList = null;
@@ -121,8 +116,7 @@ public class TasksListModel {
 	}
 
 	private static class DatabaseHandler extends SQLiteOpenHelper {
-		public static final String TAG = "model_DatabaseHandler";
-
+		
 		public static final String KEY_TASK_ID = "id";
 		public static final String KEY_DESCRIPTION = "description";
 		public static final String KEY_LOCATION = "location";
@@ -156,8 +150,7 @@ public class TasksListModel {
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
 				throws SQLiteException {
-			Log.w(TAG, "Upgrading database form version " + oldVersion + " to "
-					+ newVersion + ", which will destriy all old data");
+			
 			db.execSQL("drop table if exists " + DATABASE_TABLE);
 			onCreate(db);
 		}

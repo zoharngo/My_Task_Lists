@@ -19,7 +19,6 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,7 +42,6 @@ public class AddNewTaskActivity extends FragmentActivity implements
 	public final static String FIND_ADDRESSS = "il.ac.shenkar.controller.FIND_ADDRESSS";
 	private static final long POINT_RADIUS = 500;
 	private static final long PROX_ALERT_EXPIRATION = -1;
-	private final static String TAG = "controller_AddNewTaskActivity";
 	private DialogFragment findAddressDialog = null;
 	private TasksListModel tasksListModel = null;
 	private EditText editDescription = null;
@@ -116,8 +114,7 @@ public class AddNewTaskActivity extends FragmentActivity implements
 
 	private void saveNewTask() {
 
-		Log.d(TAG, "Adding New Task: '" + editDescription.getText().toString()
-				+ "' ");
+	
 		Task task = new Task();
 		task.setTaskId(System.currentTimeMillis());
 		task.setDescription(editDescription.getText().toString());
@@ -125,20 +122,21 @@ public class AddNewTaskActivity extends FragmentActivity implements
 		task.setDate(getToDoWhen());
 
 		if (toggleTimeAlarm.isChecked()) {
+
 			long wakeUptimeInterval = getToDoWhen()
 					- System.currentTimeMillis();
 
 			if (wakeUptimeInterval > 0) {
-				Intent intent = new Intent(AddNewTaskActivity.this,
-						NotificationReceiver.class);
+				Intent intent = new Intent(getApplicationContext(), NotificationReceiver.class);
 
 				intent.putExtra(TASK_EXTRA, editDescription.getText()
 						.toString());
 
-				PendingIntent pendingIntent = PendingIntent.getBroadcast(
-						getApplicationContext(),
-						Integer.valueOf((int) wakeUptimeInterval), intent,
+				PendingIntent pendingIntent = PendingIntent.getBroadcast(this,
+						Integer.valueOf((int) task.getDate()), intent,
 						PendingIntent.FLAG_UPDATE_CURRENT);
+
+				task.setTimeAlarm(pendingIntent);
 				AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
 				alarmManager.set(AlarmManager.RTC_WAKEUP,
@@ -148,15 +146,14 @@ public class AddNewTaskActivity extends FragmentActivity implements
 			}
 		}
 		if (toggleLocationAlarm.isChecked()) {
-			Intent intent = new Intent(AddNewTaskActivity.this,
-					NotificationReceiver.class);
+
+			Intent intent = new Intent(getApplicationContext(), NotificationReceiver.class);
 			intent.putExtra(TASK_EXTRA, editDescription.getText().toString());
 
-			PendingIntent pendingIntent = PendingIntent.getBroadcast(
-					getApplicationContext(),
-					Integer.valueOf((int) task.getDate()), intent,
+			PendingIntent pendingIntent = PendingIntent.getBroadcast(this,
+					Integer.valueOf((int) task.getTaskId()), intent,
 					PendingIntent.FLAG_UPDATE_CURRENT);
-
+			task.setGeoAlarm(pendingIntent);
 			locationManager.addProximityAlert(latitude, longitude,
 					POINT_RADIUS, PROX_ALERT_EXPIRATION, pendingIntent);
 
@@ -221,7 +218,7 @@ public class AddNewTaskActivity extends FragmentActivity implements
 	@Override
 	public void onDateSet(DatePicker view, int year, int monthOfYear,
 			int dayOfMonth) {
-		Log.i(TAG, "Date is set!.");
+		
 		dateTextView.setText("On, " + dayOfMonth + "/" + (monthOfYear + 1)
 				+ "/" + year + ".");
 		datePickerDayOfMounth = dayOfMonth;
@@ -231,7 +228,7 @@ public class AddNewTaskActivity extends FragmentActivity implements
 
 	@Override
 	public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-		Log.i(TAG, "Time is set!.");
+		
 		String hourStr = null;
 		String minuteStr = null;
 		String am_pm = null;
@@ -271,10 +268,9 @@ public class AddNewTaskActivity extends FragmentActivity implements
 		case R.id.button_set_location_alarm:
 			if (isChecked) {
 				locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-					alarmLocationTextView
-							.setText(getString(R.string.alarm_time_set)
-									+ " On.");
-				
+				alarmLocationTextView
+						.setText(getString(R.string.alarm_time_set) + " On.");
+
 			} else {
 				alarmLocationTextView
 						.setText(getString(R.string.alarm_time_set) + " Off.");

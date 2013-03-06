@@ -7,7 +7,6 @@ import il.ac.shenkar.controller.outmessaging.events.ASyncNewUserFailedEvent;
 import il.ac.shenkar.controller.outmessaging.events.ASyncNewUserSucceedEvent;
 import java.util.regex.Pattern;
 import com.squareup.otto.Subscribe;
-
 import il.ac.shenkar.model.Task;
 import il.ac.shenkar.model.TasksListModel;
 import android.content.Intent;
@@ -15,7 +14,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,13 +25,13 @@ import android.widget.Toast;
 
 public class SignUpActivity extends FragmentActivity implements
 		OnClickListener, OnFocusChangeListener {
-	private static final String TAG = "il.ac.shenkar.controller.SignUpActivity";
+
 	private BusProvider bus = BusProvider.getBusProvider();
 	private TasksListModel tasksListModel = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		Log.i(TAG, "SignUpActivity Started !");
+
 		super.onCreate(savedInstanceState);
 		tasksListModel = TasksListModel.getInstance(this);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -104,8 +102,18 @@ public class SignUpActivity extends FragmentActivity implements
 					Toast.LENGTH_LONG).show();
 			Toast.makeText(this, " Soo start to remember your tasks !",
 					Toast.LENGTH_LONG).show();
+
 			Intent intent = new Intent(this, MainTaskListActivity.class);
 			startActivity(intent);
+
+			StringBuilder builderFirstTask = new StringBuilder();
+			builderFirstTask.append(getString(R.string.hello))
+					.append(" " + ApplicationRoot.user.getFirstName() + ",\n")
+					.append(getString(R.string.first_task));
+			Task task = new Task(System.currentTimeMillis(),
+					builderFirstTask.toString(), "", -1);
+			tasksListModel.asyncTaskToServer(task);
+
 			finish();
 		}
 	}
@@ -162,15 +170,7 @@ public class SignUpActivity extends FragmentActivity implements
 
 		ApplicationRoot.user = new User(userId, firstName, lastName, userPass,
 				userEmail);
-
 		tasksListModel.asyncNewUserOnServer();
-		StringBuilder builderFirstTask = new StringBuilder();
-		builderFirstTask.append(getString(R.string.hello))
-				.append(" " + firstName + ",\n")
-				.append(getString(R.string.first_task));
-		Task task = new Task(System.currentTimeMillis(),
-				builderFirstTask.toString(), "", -1);
-		tasksListModel.asyncTaskToServer(task);
 
 	}
 }

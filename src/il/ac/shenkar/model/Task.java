@@ -3,12 +3,17 @@ package il.ac.shenkar.model;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.PendingIntent;
+
 public class Task {
 
 	private long taskId;
 	private String description;
 	private String location;
 	private long date;
+	private PendingIntent geoAlarm = null;
+	private PendingIntent timeAlarm = null;
+	
 
 	public Task() {
 		super();
@@ -52,6 +57,22 @@ public class Task {
 
 	public void setDate(long date) {
 		this.date = date;
+	}
+
+	public PendingIntent getGeoAlarm() {
+		return geoAlarm;
+	}
+
+	public void setGeoAlarm(PendingIntent geoAlarm) {
+		this.geoAlarm = geoAlarm;
+	}
+
+	public PendingIntent getTimeAlarm() {
+		return timeAlarm;
+	}
+
+	public void setTimeAlarm(PendingIntent timeAlarm) {
+		this.timeAlarm = timeAlarm;
 	}
 
 	public JSONObject toJSON() {

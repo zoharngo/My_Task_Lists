@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,13 +21,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class LoginActivity extends FragmentActivity implements OnClickListener {
-	private static final String TAG = "il.ac.shenkar.controller.LoginActivity";
+
 	private BusProvider bus = BusProvider.getBusProvider();
 	private TasksListModel tasksListModel = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		Log.i(TAG, "LoginActivity Started !");
+	
 		super.onCreate(savedInstanceState);
 		tasksListModel = TasksListModel.getInstance(this);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -51,7 +50,7 @@ public class LoginActivity extends FragmentActivity implements OnClickListener {
 
 	@Subscribe
 	public void onASyncGetUserInfoFailedEvent(ASyncGetUserInfoFailedEvent e) {
-		Log.i(TAG, "ASyncGetUserInfoFailedEvent occur");
+	
 		ApplicationRoot
 				.showDialogErrorMessage(getSupportFragmentManager(),
 						" Communication problem !",
@@ -60,7 +59,7 @@ public class LoginActivity extends FragmentActivity implements OnClickListener {
 
 	@Subscribe
 	public void onASyncGetUserInfoSucceedEvent(ASyncGetUserInfoSucceedEvent e) {
-		Log.i(TAG, "ASyncGetUserInfoSucceedEvent occur");
+		
 		if (e.user == null) {
 			Toast.makeText(
 					this,

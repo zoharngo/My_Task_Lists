@@ -10,10 +10,9 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import android.util.Log;
+
 
 public class HttpClient {
-	private static final String TAG = "il.ac.shenkar.controller.outmessaging.HttpClient";
 
 	public static String getUserInfo(String URL) throws IOException,
 			SQLException, GeneralSecurityException {
@@ -92,9 +91,7 @@ public class HttpClient {
 					tasks.add(task);
 				}
 
-			} else {
-				Log.i(TAG, "Update Not Necessary");
-			}
+			} 
 
 		} catch (IOException e) {
 			throw e;

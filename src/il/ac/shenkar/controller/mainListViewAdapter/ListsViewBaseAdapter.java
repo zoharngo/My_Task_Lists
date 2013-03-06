@@ -9,7 +9,6 @@ import java.util.Locale;
 import android.content.Context;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,7 +22,6 @@ import android.widget.TextView;
 public class ListsViewBaseAdapter extends BaseAdapter implements Filterable,
 		OnClickListener {
 
-	private final String TAG = "il.ac.shenkar.controller.mainListViewAdapter.ListsViewBaseAdapter";
 
 	private LayoutInflater l_Inflater;
 	private TasksListModel taskListsModel;
@@ -129,7 +127,7 @@ public class ListsViewBaseAdapter extends BaseAdapter implements Filterable,
 	public void onClick(View v) {
 		CheckBox checkBox = (CheckBox) v;
 		Integer position = (Integer) checkBox.getTag();
-		Log.i(TAG, " Check done button is pressed!");
+		
 		if (checkBox.isChecked()) {
 			doneTasks.add(getItem(position));
 			itemPosChecked.add(position);
