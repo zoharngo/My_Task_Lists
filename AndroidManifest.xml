@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="il.ac.shenkar.controller"
+    package="il.org.shenkar.controller"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -8,20 +8,20 @@
         android:targetSdkVersion="17" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
-        android:name=".application.ApplicationRoot"
+        android:name="il.org.shenkar.controller.application.ApplicationRoot"
         android:icon="@drawable/ic_launcher"
         android:theme="@android:style/Theme.DeviceDefault"
         android:uiOptions="splitActionBarWhenNarrow" >
         <activity
-            android:name=".MainTaskListActivity"
+            android:name="il.org.shenkar.controller.MainTaskListActivity"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name=".AddNewTaskActivity"
+            android:name="il.org.shenkar.controller.AddNewTaskActivity"
             android:label="@string/title_activity_add_new_task"
             android:windowSoftInputMode="stateHidden" >
             <meta-data
@@ -29,7 +29,7 @@
                 android:value="il.ac.shenkar.controller.MainTaskListActivity" />
         </activity>
         <activity
-            android:name=".WelocomeActivity"
+            android:name="il.org.shenkar.controller.WelocomeActivity"
             android:label="@string/title_activity_welcome" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,28 +38,28 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name="il.org.shenkar.controller.LoginActivity"
             android:label="@string/title_activity_login" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="il.ac.shenkar.controller.WelocomeActivity" />
+                android:value="il.org.shenkar.controller.WelocomeActivity" />
         </activity>
         <activity
-            android:name=".SignUpActivity"
+            android:name="il.org.shenkar.controller.SignUpActivity"
             android:label="@string/title_activity_sign_up" >
-            <meta-data
+           <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="il.ac.shenkar.controller.WelocomeActivity" />
+                android:value="il.org.shenkar.controller.WelocomeActivity" />
         </activity>
 
-        <receiver android:name="il.ac.shenkar.controller.notifications.NotificationReceiver" >
+        <receiver android:name="il.org.shenkar.controller.notifications.NotificationReceiver" >
             <intent-filter>
-                <action android:name="il.ac.shenkar.controller.Notifier" />
+                <action android:name="il.org.shenkar.controller.Notifier" />
             </intent-filter>
         </receiver>
 
         <service
-            android:name="il.ac.shenkar.controller.outmessaging.RefreshTaskListService"
+            android:name="il.org.shenkar.controller.outmessaging.RefreshTaskListService"
             android:enabled="true" />
     </application>
 

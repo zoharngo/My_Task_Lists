@@ -1,11 +1,16 @@
 <resources>
 
-    <string name="welcome">Hello,\nWelcome to What TODO Today App.\n\nThis is your first Entery to 
-the Application.\n\nIn order for you to Post Task you
-need vaild account detailes.\n\nPress Continue In order to log\nin 
-to exist Accounts Or Sign up\nto create new Account.</string>
+    <string name="welcome">
+<![CDATA[<i>
+Hello,<br />Welcome to What TODO Today App.<br /><br />This is your first Entery to 
+the Application.<br /><br />In order for you to Post Task you
+need vaild account detailes.<br /><br />Press <b>Continue</b> In order to log<br />in 
+to exist Accounts Or <b>Sign up</b><br />to create new Account.<br /><br />
+When your account is ready you can follow<br />your tasks from any device<br />
+using the device browser in the flowing <b>URL</b>,<br /><br /><a href="https://s3.amazonaws.com/what.to.do.today/index.html">https://s3.amazonaws.com/what.to.do.today/index.html</a></i>]]>
+    </string>
     <string name="hello">Hello</string>
-    <string name="first_task">you register here for one reason to start remember your bloody tasks!..\n\nso your first task is to remember this!.</string>
+    <string name="first_task">you register here for one reason to start remember your bloody tasks!..<br /><br />so your first task is to remember this!.</string>
     <string name="todo_when">TODO on:</string>
     <string name="location_where">Location:</string>
     <string name="title_activity_welcome">What TODO Today</string>
@@ -47,9 +52,7 @@ to exist Accounts Or Sign up\nto create new Account.</string>
     <string name="search_bar_text">Search Task</string>
     <string name="dialog_positive_btn">OK</string>
     <string name="address_title">Select Adderss:</string>
-    
     <string name="sometime">Sometime</string>
     <string name="somewhere">Somewhere</string>
-    
 
 </resources>
