@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="il.org.shenkar.controller"
-    android:versionCode="1"
+    android:versionCode="2"
     android:versionName="1.0" >
 
     <uses-sdk
@@ -13,6 +13,7 @@
 
     <application
         android:name="il.org.shenkar.controller.application.ApplicationRoot"
+        android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:theme="@android:style/Theme.DeviceDefault"
         android:uiOptions="splitActionBarWhenNarrow" >
@@ -47,20 +48,18 @@
         <activity
             android:name="il.org.shenkar.controller.SignUpActivity"
             android:label="@string/title_activity_sign_up" >
-           <meta-data
+            <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="il.org.shenkar.controller.WelocomeActivity" />
         </activity>
 
         <receiver android:name="il.org.shenkar.controller.notifications.NotificationReceiver" >
-            <intent-filter>
-                <action android:name="il.org.shenkar.controller.Notifier" />
-            </intent-filter>
         </receiver>
 
         <service
             android:name="il.org.shenkar.controller.outmessaging.RefreshTaskListService"
-            android:enabled="true" />
+            android:enabled="true" >
+        </service>
     </application>
 
 </manifest>

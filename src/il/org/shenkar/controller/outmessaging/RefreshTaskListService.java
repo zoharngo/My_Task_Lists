@@ -13,26 +13,25 @@ import il.org.shenkar.model.TasksListModel;
 import android.app.IntentService;
 import android.content.Intent;
 
-
 public class RefreshTaskListService extends IntentService {
 	private BusProvider bus = BusProvider.getBusProvider();
-	private TasksListModel tasksListModel = TasksListModel
-			.getInstance(getBaseContext());
 
 	public RefreshTaskListService() {
-		super("RefreshTaskListService");	
+		super("RefreshTaskListService");
 	}
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		try {
+			TasksListModel tasksListModel = TasksListModel.getInstance(this);
 			ArrayList<Task> refreshedTask = tasksListModel.refreshTasksList();
 			bus.post(new RefreshTasksListEvent(refreshedTask));
-		} catch (IOException e) {		
+
+		} catch (IOException e) {
 			bus.post(new RefreshExceptionEvent("IOException"));
-		} catch (JSONException e) {	
+		} catch (JSONException e) {
 			bus.post(new RefreshExceptionEvent("JSONException"));
-		} catch (SQLException e) {	
+		} catch (SQLException e) {
 			bus.post(new RefreshExceptionEvent("SQLException"));
 		} catch (GeneralSecurityException e) {
 			bus.post(new RefreshExceptionEvent("GeneralSecurityException"));

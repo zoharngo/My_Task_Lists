@@ -36,7 +36,7 @@ public class MainTaskListActivity extends FragmentActivity implements
 	private TasksListModel tasksListModel = null;
 	private ListView taskList = null;
 	private BusProvider bus = BusProvider.getBusProvider();
-	private static PendingIntent pendingIntentService = null;
+	private PendingIntent pendingIntentService = null;
 	private int deleteActionId;
 
 	@Override
@@ -110,9 +110,9 @@ public class MainTaskListActivity extends FragmentActivity implements
 	}
 
 	private void setRefreshTaskListServiceOn() {
-		Intent intent = new Intent(this, RefreshTaskListService.class);
+		Intent intent = new Intent(getApplicationContext(), RefreshTaskListService.class);
 
-		pendingIntentService = PendingIntent.getService(this, 0, intent, 0);
+		pendingIntentService = PendingIntent.getService(this, 0, intent,PendingIntent.FLAG_UPDATE_CURRENT);
 		AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
 		alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
@@ -127,8 +127,7 @@ public class MainTaskListActivity extends FragmentActivity implements
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		
-			setRefreshTaskListServiceOff();
+		setRefreshTaskListServiceOff();
 		
 	}
 
