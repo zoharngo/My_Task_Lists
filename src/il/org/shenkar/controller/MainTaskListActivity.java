@@ -26,7 +26,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ListView;
-
+import com.google.analytics.tracking.android.EasyTracker;
 import com.squareup.otto.Subscribe;
 
 public class MainTaskListActivity extends FragmentActivity implements
@@ -42,21 +42,19 @@ public class MainTaskListActivity extends FragmentActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
-	
 		super.onCreate(savedInstanceState);
 		getActionBar().setTitle("Hello,  " + ApplicationRoot.user.getUserId());
 		this.setContentView(R.layout.main_task_lists_activity);
 		tasksListModel = TasksListModel.getInstance(this);
-
 		EditText searchBar = (EditText) findViewById(R.id.search_bar);
 		searchBar.addTextChangedListener(this);
 		baseAdapter = new ListsViewBaseAdapter(this);
 		taskList = (ListView) findViewById(R.id.listV_main);
 		taskList.setTextFilterEnabled(true);
 		taskList.setAdapter(baseAdapter);
-		
-			setRefreshTaskListServiceOn();
-	
+
+		setRefreshTaskListServiceOn();
+
 	}
 
 	@Override
@@ -71,6 +69,10 @@ public class MainTaskListActivity extends FragmentActivity implements
 		switch (item.getItemId()) {
 
 		case R.id.add_task_btn:
+
+			EasyTracker.getTracker().sendEvent("Clicks", "Button_click", "ADD",
+					null);
+
 			Intent intent_0 = new Intent(this, AddNewTaskActivity.class);
 			startActivity(intent_0);
 			break;
@@ -110,9 +112,11 @@ public class MainTaskListActivity extends FragmentActivity implements
 	}
 
 	private void setRefreshTaskListServiceOn() {
-		Intent intent = new Intent(getApplicationContext(), RefreshTaskListService.class);
+		Intent intent = new Intent(getApplicationContext(),
+				RefreshTaskListService.class);
 
-		pendingIntentService = PendingIntent.getService(this, 0, intent,PendingIntent.FLAG_UPDATE_CURRENT);
+		pendingIntentService = PendingIntent.getService(this, 0, intent,
+				PendingIntent.FLAG_UPDATE_CURRENT);
 		AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
 		alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
@@ -120,7 +124,7 @@ public class MainTaskListActivity extends FragmentActivity implements
 
 	}
 
-	private void setRefreshTaskListServiceOff() {	
+	private void setRefreshTaskListServiceOff() {
 		pendingIntentService.cancel();
 	}
 
@@ -128,7 +132,6 @@ public class MainTaskListActivity extends FragmentActivity implements
 	protected void onDestroy() {
 		super.onDestroy();
 		setRefreshTaskListServiceOff();
-		
 	}
 
 	@Override
@@ -141,6 +144,18 @@ public class MainTaskListActivity extends FragmentActivity implements
 	protected void onPause() {
 		super.onPause();
 		bus.unregister(this);
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		EasyTracker.getInstance().activityStart(this);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		EasyTracker.getInstance().activityStop(this);
 	}
 
 	@Subscribe
@@ -163,7 +178,7 @@ public class MainTaskListActivity extends FragmentActivity implements
 
 	@Subscribe
 	public void onSyncTaskFailedEvent(ASyncTaskFailedEvent e) {
-	
+
 		ApplicationRoot
 				.showDialogErrorMessage(
 						getSupportFragmentManager(),
@@ -173,7 +188,7 @@ public class MainTaskListActivity extends FragmentActivity implements
 
 	@Subscribe
 	public void onSyncTaskSucceedEvent(ASyncTaskSucceedEvent e) {
-	
+
 		if (e.task != null) {
 			tasksListModel.setTask(e.task);
 			baseAdapter.notifyDataSetChanged();
@@ -183,7 +198,7 @@ public class MainTaskListActivity extends FragmentActivity implements
 
 	@Subscribe
 	public void onRemoveDoneTasksSucceedEvent(RemoveDoneTasksSucceedEvent e) {
-	
+
 		switch (deleteActionId) {
 		case R.id.delete_all_task_btn:
 			removeAlarms(tasksListModel.getTaskList());
@@ -201,7 +216,7 @@ public class MainTaskListActivity extends FragmentActivity implements
 
 	@Subscribe
 	public void onRemoveDoneTasksFailedEvent(RemoveDoneTasksFailedEvent e) {
-	
+
 		ApplicationRoot
 				.showDialogErrorMessage(
 						getSupportFragmentManager(),

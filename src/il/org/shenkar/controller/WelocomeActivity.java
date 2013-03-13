@@ -1,5 +1,7 @@
 package il.org.shenkar.controller;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 import il.org.shenkar.controller.R;
 import il.org.shenkar.controller.application.ApplicationRoot;
 import android.app.Activity;
@@ -53,7 +55,12 @@ public class WelocomeActivity extends Activity implements OnClickListener {
 	@Override
 	protected void onStop() {
 		super.onStop();
-		finish();
+		EasyTracker.getInstance().activityStop(this); 
 	}
+	 @Override
+	  public void onStart() {
+	    super.onStart();
+	    EasyTracker.getInstance().activityStart(this); 
+	  }
 
 }

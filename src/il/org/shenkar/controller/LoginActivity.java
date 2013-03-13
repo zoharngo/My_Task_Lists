@@ -1,5 +1,6 @@
 package il.org.shenkar.controller;
 
+import com.google.analytics.tracking.android.EasyTracker;
 import com.squareup.otto.Subscribe;
 
 import il.org.shenkar.controller.R;
@@ -28,7 +29,7 @@ public class LoginActivity extends FragmentActivity implements OnClickListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-	
+
 		super.onCreate(savedInstanceState);
 		tasksListModel = TasksListModel.getInstance(this);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -51,7 +52,7 @@ public class LoginActivity extends FragmentActivity implements OnClickListener {
 
 	@Subscribe
 	public void onASyncGetUserInfoFailedEvent(ASyncGetUserInfoFailedEvent e) {
-	
+
 		ApplicationRoot
 				.showDialogErrorMessage(getSupportFragmentManager(),
 						" Communication problem !",
@@ -60,7 +61,7 @@ public class LoginActivity extends FragmentActivity implements OnClickListener {
 
 	@Subscribe
 	public void onASyncGetUserInfoSucceedEvent(ASyncGetUserInfoSucceedEvent e) {
-		
+
 		if (e.user == null) {
 			Toast.makeText(
 					this,
@@ -113,6 +114,20 @@ public class LoginActivity extends FragmentActivity implements OnClickListener {
 
 		ApplicationRoot.user = new User(userId, userPass);
 		tasksListModel.asyncUserAuthentication();
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+
+		EasyTracker.getInstance().activityStart(this); 
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+
+		EasyTracker.getInstance().activityStop(this);
 	}
 
 }

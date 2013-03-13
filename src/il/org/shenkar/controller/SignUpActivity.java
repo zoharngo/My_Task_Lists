@@ -1,7 +1,8 @@
 package il.org.shenkar.controller;
 
-
 import java.util.regex.Pattern;
+
+import com.google.analytics.tracking.android.EasyTracker;
 import com.squareup.otto.Subscribe;
 
 import il.org.shenkar.controller.R;
@@ -176,4 +177,17 @@ public class SignUpActivity extends FragmentActivity implements
 		tasksListModel.asyncNewUserOnServer();
 
 	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+		EasyTracker.getInstance().activityStart(this);
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		EasyTracker.getInstance().activityStop(this); 
+	}
+
 }

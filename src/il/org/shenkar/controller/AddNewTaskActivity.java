@@ -35,6 +35,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.google.analytics.tracking.android.EasyTracker;
 import com.squareup.otto.Subscribe;
 
 public class AddNewTaskActivity extends FragmentActivity implements
@@ -307,5 +308,18 @@ public class AddNewTaskActivity extends FragmentActivity implements
 		super.onResume();
 		bus.register(this);
 	}
+	 @Override
+	  public void onStart() {
+	    super.onStart();
+	 
+	    EasyTracker.getInstance().activityStart(this); 
+	  }
+
+	  @Override
+	  public void onStop() {
+	    super.onStop();
+	
+	    EasyTracker.getInstance().activityStop(this); 
+	  }
 
 }
