@@ -77,33 +77,33 @@ public class TasksListModel {
 	public void asyncTaskToServer(Task task) {
 		AsyncTaskToServer taskToServer = new AsyncTaskToServer(task);
 		taskToServer
-				.execute("http://what-todo-today.jelastic.servint.net/ws/rest/tasks/put_task");
+				.execute("http://restwebservice.cloudapp.net/myToDoListWebApp/rest/tasks/put_task");
 	}
 
 	public void asyncDeleteTaskActionToServer(ArrayList<Task> taskToDelete) {
 		AsyncDeleteTaskFromServer deleteTaskFromServer = new AsyncDeleteTaskFromServer(
 				taskToDelete);
 		deleteTaskFromServer
-				.execute("http://what-todo-today.jelastic.servint.net/ws/rest/tasks/delete_tasks/tasks_id_arr");
+				.execute("http://restwebservice.cloudapp.net/myToDoListWebApp/rest/tasks/delete_tasks/tasks_id_arr");
 	}
 
 	public ArrayList<Task> refreshTasksList() throws IOException,
 			JSONException, java.sql.SQLException, GeneralSecurityException {
 		ArrayList<Task> tasks = HttpClient
-				.getTasks("http://what-todo-today.jelastic.servint.net/ws/rest/tasks");
+				.getTasks("http://restwebservice.cloudapp.net/myToDoListWebApp/rest/tasks");
 		return tasks;
 	}
 
 	public void asyncUserAuthentication() {
 		AsyncGetUserInfo userToServer = new AsyncGetUserInfo();
 		userToServer
-				.execute("http://what-todo-today.jelastic.servint.net/ws/rest/tasks/users/get_user");
+				.execute("http://restwebservice.cloudapp.net/myToDoListWebApp/rest/tasks/users/get_user");
 	}
 
 	public void asyncNewUserOnServer() {
 		AsyncUserToServer userToServer = new AsyncUserToServer();
 		userToServer
-				.execute("http://what-todo-today.jelastic.servint.net/ws/rest/tasks/users/put_user/user");
+				.execute("http://restwebservice.cloudapp.net/myToDoListWebApp/rest/tasks/users/put_user/user");
 	}
 
 	public void setTask(Task task) {// Change task Id to current time stamp

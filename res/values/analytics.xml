@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Replace placeholder ID with your tracking ID -->
+    <string name="ga_trackingId">UA-39228733-1</string>
+
+    <!-- Enable automatic activity tracking -->
+    <bool name="ga_autoActivityTracking">true</bool>
+
+    <!-- Enable automatic exception tracking -->
+    <bool name="ga_reportUncaughtExceptions">true</bool>
+    <bool name="ga_debug">true</bool>
+
+    <string name="il.org.shenkar.controller.MainTaskListActivity">Main Task List</string>
+    <string name="il.org.shenkar.controller.SignUpActivity">Sign Up</string>
+    <string name="il.org.shenkar.controller.AddNewTaskActivity">Add New Task</string>
+    <string name="il.org.shenkar.controller.WelocomeActivity">Welcome</string>
+    <string name="il.org.shenkar.controller.LoginActivity">Log In</string>
+
+</resources>
